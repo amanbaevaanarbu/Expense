@@ -1,0 +1,12 @@
+
+.select{
+margin-left:600px ;
+
+width: 120px;
+height: 30px;
+border-radius: 5px;
+color: beige;
+background-color: blue;
+
+outline: none;
+}

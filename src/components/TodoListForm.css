@@ -1,0 +1,12 @@
+.div-container input{
+    margin-top: 300px;
+    width: 200px;
+    height:30px;
+    border-radius: 5px;
+    background-color: aqua;
+}
+.div-container button{
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+}

@@ -1,50 +1,73 @@
+import './TodoListForm.css'
 import { useState } from "react"
 import Button from "./UI/Button"
 import Input from "./UI/Input"
+import ExpenseFilter from "./expenseFIlter/ExpenseFilter"
 
 const TodoForm = () => {
     const [value, setValue] = useState('')
-    const [date, setDate] = useState('')
+    const [state, setState] = useState('')
     const [items, setItems] = useState([])
+    const [sort, setSort] = useState([])
+    const[disabled,setDisabled] = useState(false)
     const valueChangeHandler = (e) => {
         setValue(e.target.value)
     }
-    const dateChangeHandler = (el) => {
-        setDate(el.target.value)
-        console.log(date);
+    const textChangeHandler = (el) => {
+        setState(el.target.value)
+
     }
     const submitHandler = (e) => {
         e.preventDefault()
         setItems((prevState) => {
-            return [...prevState, { value, date, id: Math.random() }]
+
+            return [...prevState, { value, state, id: Math.random() }]
 
         })
+        setState('')
+        setValue('')
     }
-    return (
-        <div>
-            <form onSubmit={submitHandler}>
 
-                <Input onChange={valueChangeHandler} />
-                <Input type="date" onChange={dateChangeHandler} />
-                <Button>Add</Button>
+    const Sortirovka = items.sort((a, b) => {
+
+        if (sort === 'больше') {
+            return b.state - a.state
+        } else {
+            return a.state - b.state
+        }
+    })
+
+    console.log(sort);
+    return (
+        <div >
+            <form onSubmit={submitHandler}>
+                <div className='div-container'>
+                    <Input value={value} onChange={valueChangeHandler} placeholder='name' />
+                    <Input value={state} type="text" onChange={textChangeHandler} placeholder='age' />
+                    <Button disabled={value&&state?false:true}>Add</Button>
+
+                </div>
 
 
             </form>
             <ul>
+                <ExpenseFilter onChange={(event) => setSort(event.target.value)} />
+
 
                 {
-                    items.map((elem) => {
-                        return ( //<li key={elem.id}>{elem.value}  {elem.date} </li>
-                            <div key={elem.id} style={{display:'flex', justifyContent:'center'}}>
-                        <ul>{elem.value}</ul>
-                        <ul>{elem.date}</ul>
-                        </div>)
-                            
-                        
+                    Sortirovka.map((elem) => {
+                        return (
+                            <div key={elem.id} style={{ display: 'flex', justifyContent: 'center' }}>
+                                <ul>{elem.value}</ul>
+                                <ul>{elem.state}</ul>
+                            </div>)
+
+
 
                     })
 
                 }
+
             </ul>
         </div>
     )
